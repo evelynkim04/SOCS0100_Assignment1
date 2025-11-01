@@ -35,7 +35,7 @@ data <- data %>%
          "Country" = "Entity"
   )
  
-# Deleting unnecessary empty columns at the far right of "data" and calling this new dataset "data_clean"
+# Selecting variables - Deleting unnecessary empty columns at the far right of "data" and calling this new dataset "data_clean"
 cols_to_remove <- c("X", "X.1", "X.2", "X.3", "X.4", "X.5")
 data_clean <- data %>% 
   select(-all_of(cols_to_remove))
@@ -51,7 +51,7 @@ colnames(data_clean) <- colnames(data_clean) %>%
 
 colnames(data_clean) # Cheking to see newly cleaned column names.
 
-# Pivoting the "data_clean" longer and removing NA. 
+# Reshaping dataframe: Pivoting the "data_clean" longer, creating new variables ("disease" and "measure"), and removing NA. 
 data_long <- data_clean %>%
   pivot_longer(
     cols = -c(country, year),          
