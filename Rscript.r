@@ -1,3 +1,4 @@
+# Part I-B
 # Removing everything in my environment and setting up working directory.
 setwd("~/Downloads")
 rm(list = ls())
@@ -49,15 +50,33 @@ colnames(data_clean) <- colnames(data_clean) %>%
   str_squish() %>%  # Using str_squish() to make sure that there are no unnecessary spaces.
   str_to_lower() # Using str_to_lower() to make all characters lowercase and thus make my text consistent. 
 
-colnames(data_clean) # Cheking to see newly cleaned column names.
+colnames(data_clean) # Checking to see newly cleaned column names.
 
-# Reshaping dataframe: Pivoting the "data_clean" longer, creating new variables ("disease" and "measure"), and removing NA. 
+# Reshaping data frame: Pivoting the "data_clean" longer, creating new variables ("disease" and "measure"), and removing NA. 
 data_long <- data_clean %>%
   pivot_longer(
     cols = -c(country, year),          
     names_to = c("disease", "measure"),  
-    names_sep = "_",                    
+    names_sep = "_",          # Separates disease from the measure (immunisation coverage or number of cases)         
     values_to = "value",
     values_drop_na = TRUE
   )
+
+# Part II-A
+# Visualising data using ggplot.
+install.packages("tidyverse")
+
+# Plotting a line graph. 
+diff_measure_overtime <- diff_measure_overtime %>%
+  mutate(year = as.numeric(year))
+
+ggplot(diff_measure_overtime, aes(x = year, y = value, color = disease)) + 
+  geom_line() +
+  facet_wrap(~ measure, scales = "free_y") + # Having everything in one graph made it hard to understand, so I utilized AI to suggest a way of making this data visualisation clearer. It suggested to make 4 separate panels using facet_warp().
+  labs(
+    title = "Disease Cases and Immunisation Coverage Over Time",
+    x = "Year",
+    y = "Value"
+  )
+
 
