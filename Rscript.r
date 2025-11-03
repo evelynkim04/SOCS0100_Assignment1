@@ -108,3 +108,12 @@ ggplot(continent_means, aes(x = continent, y = mean_value, fill = measure)) +
     y = "Measure value (log scale)"
   ) +
   theme_minimal()
+
+# Creating heatmap
+ggplot(continent_means, aes(x = continent, y = measure, fill = mean_value)) +
+  geom_tile(color = "white") +
+  scale_fill_viridis_c(option = "plasma") +
+  theme_minimal() +
+  labs(title = "Heatmap of Average Measure Values by Continent", x = "Continent", y = "Measure", fill = "Mean Value")
+
+
