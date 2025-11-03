@@ -66,17 +66,45 @@ data_long <- data_clean %>%
 # Visualising data using ggplot.
 install.packages("tidyverse")
 
-# Plotting a line graph. 
-diff_measure_overtime <- diff_measure_overtime %>%
-  mutate(year = as.numeric(year))
+# Creating a new table with the average value 
+library(dplyr)
 
-ggplot(diff_measure_overtime, aes(x = year, y = value, color = disease)) + 
-  geom_line() +
-  facet_wrap(~ measure, scales = "free_y") + # Having everything in one graph made it hard to understand, so I utilized AI to suggest a way of making this data visualisation clearer. It suggested to make 4 separate panels using facet_warp().
+averages <- diff_measure_overtime %>%
+  group_by(country, measure) %>%      # group by country AND variable type
+  summarise(mean_value = mean(value, na.rm = TRUE)) %>% 
+  ungroup()
+
+# Grouping countries by continent
+library(dplyr)
+library(countrycode)
+
+continent <- averages %>%
+  filter(!country %in% c("World", "Africa", "Americas", "Eastern Mediterranean", 
+                         "Europe", "Micronesia (country)", "South-East Asia", "Western Pacific")) %>%
+  mutate(continent = countrycode(country, "country.name", "continent"))
+
+continent <- averages %>%
+  filter(!country %in% c("World", "Africa", "Americas", "Eastern Mediterranean", 
+                         "Europe", "Micronesia (country)", "South-East Asia", "Western Pacific")) %>%
+  mutate(continent = countrycode(country, "country.name", "continent",
+                                 custom_match = c("Timor" = "Asia")))
+
+continent_means <- continent %>%
+  group_by(continent, measure) %>%
+  summarise(mean_value = mean(mean_value, na.rm = TRUE))
+
+ggplot(continent_means, aes(x = continent, y = mean_value, fill = measure)) +
+  geom_col(position = "dodge") +
+  theme_minimal() +
+  labs(title = "Average Values by Continent", x = "Continent", y = "Mean Value")
+
+# Applying a logscale because immunity and tuberculosisper100,000 aren't visible (values are too small)
+ggplot(continent_means, aes(x = continent, y = mean_value, fill = measure)) +
+  geom_col(position = "dodge") +
+  scale_y_log10() +
   labs(
-    title = "Disease Cases and Immunisation Coverage Over Time",
-    x = "Year",
-    y = "Value"
-  )
-
-
+    title = "Average Values of different measures by Continent",
+    x = "Continent",
+    y = "Measure value (log scale)"
+  ) +
+  theme_minimal()
