@@ -93,15 +93,29 @@ continent_means <- continent %>%
   group_by(continent, measure) %>%
   summarise(mean_value = mean(mean_value, na.rm = TRUE))
 
-ggplot(continent_means, aes(x = continent, y = mean_value, fill = measure)) +
+# Creating heatmap
+ggplot(continent_means, aes(x = continent, 
+                            y = measure, 
+                            fill = mean_value)) +
+  geom_tile(color = "white") +
+  scale_fill_viridis_c(option = "plasma") +
+  theme_minimal() +
+  labs(title = "Heatmap of Average Measure Values by Continent", x = "Continent", y = "Measure", fill = "Mean Value")
+
+# Plotting a bar chart
+ggplot(continent_means, aes(x = continent, 
+                            y = mean_value, 
+                            fill = measure)) +
   geom_col(position = "dodge") +
   theme_minimal() +
   labs(title = "Average Values by Continent", x = "Continent", y = "Mean Value")
 
 # Applying a logscale because immunity and tuberculosisper100,000 aren't visible (values are too small)
-ggplot(continent_means, aes(x = continent, y = mean_value, fill = measure)) +
+ggplot(continent_means, aes(x = continent, 
+                            y = mean_value, 
+                            fill = measure)) +
   geom_col(position = "dodge") +
-  scale_y_log10() +
+  scale_y_log10() + 
   labs(
     title = "Average Values of different measures by Continent",
     x = "Continent",
@@ -109,11 +123,22 @@ ggplot(continent_means, aes(x = continent, y = mean_value, fill = measure)) +
   ) +
   theme_minimal()
 
-# Creating heatmap
-ggplot(continent_means, aes(x = continent, y = measure, fill = mean_value)) +
-  geom_tile(color = "white") +
-  scale_fill_viridis_c(option = "plasma") +
+# Creating a dot plot
+library(ggplot2)
+library(dplyr)
+
+ggplot(continent_means, aes(x = continent, y = mean_value, color = continent)) +
+  geom_point(size = 4, alpha = 0.8) +
+  scale_y_log10() +   # <-- log scale applied here. Makes either extremely small/large values comparable. 
+  facet_wrap(~ measure, scales = "free_y") +
   theme_minimal() +
-  labs(title = "Heatmap of Average Measure Values by Continent", x = "Continent", y = "Measure", fill = "Mean Value")
-
-
+  labs(
+    title = "Mean Values Across Continents",
+    x = "Continent",
+    y = "Mean Value (log scale)"
+  ) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(size = 14, face = "bold"),
+    legend.position = "none"
+  )
