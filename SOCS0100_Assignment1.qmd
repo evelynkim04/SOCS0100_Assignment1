@@ -20,19 +20,30 @@ Finally, in terms of missing values (NA), the dataset contains quite a significa
 
 [\[1\]](#_msoanchor_1)<https://www.sciencedirect.com/topics/immunology-and-microbiology/vaccination-schedule#:~:text=A%20vaccination%20schedule%20is%20defined,is%20effectively%20built%20and%20sustained>.
 
-## Running Code
+## Part I-B Data Processing and Functional Programming
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+This section aims to carry out 3 data wrangling using libraries such as Tidyverse packages, like dyplr. The first operation is renaming the dataset columns after having carried out all the necessary steps before hand (Removing everything in my environment and setting up working directory, downloading required packages such as pacman, and importing the "vaccine_2017.csv" data.)
 
-```{r}
-1 + 1
-```
-
-You can add options to executable code like this
+The table below shows the first 5 rows of the raw vaccine data.
 
 ```{r}
+#| label: fig-First-5-rows-of-raw-vaccine-data.
+#| fig-cap: First-5-rows-of-raw-vaccine-data.
+#| message: false
 #| echo: false
-2 * 2
+if (!require("pacman")) {
+  install.packages("pacman")
+}
+
+pacman::p_load(
+  tidyverse, 
+  kableExtra,
+  flextable, 
+  skimr) 
+
+data <- read.csv("vaccine_2017.csv", header = TRUE)
+
+knitr::kable(head(data, 5))
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+As shown in Figure 1, the column labels are extremely long and complicated.

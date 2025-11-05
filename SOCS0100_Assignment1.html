@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -108,22 +73,182 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="#_msoanchor_1">[2]</a><a href="https://www.kcl.ac.uk/kghi/research/health-and-social-science" class="uri">https://www.kcl.ac.uk/kghi/research/health-and-social-science</a></p>
 <p><a href="#_msoanchor_1">[1]</a><a href="https://www.sciencedirect.com/topics/immunology-and-microbiology/vaccination-schedule#:~:text=A%20vaccination%20schedule%20is%20defined,is%20effectively%20built%20and%20sustained" class="uri">https://www.sciencedirect.com/topics/immunology-and-microbiology/vaccination-schedule#:~:text=A%20vaccination%20schedule%20is%20defined,is%20effectively%20built%20and%20sustained</a>.</p>
 </section>
-<section id="running-code" class="level2">
-<h2 class="anchored" data-anchor-id="running-code">Running Code</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
+<section id="part-i-b-data-processing-and-functional-programming" class="level2">
+<h2 class="anchored" data-anchor-id="part-i-b-data-processing-and-functional-programming">Part I-B Data Processing and Functional Programming</h2>
+<p>This section aims to carry out 3 data wrangling using libraries such as Tidyverse packages, like dyplr. The first operation is renaming the dataset columns after having carried out all the necessary steps before hand (Removing everything in my environment and setting up working directory, downloading required packages such as pacman, and importing the “vaccine_2017.csv” data.)</p>
+<p>The table below shows the first 5 rows of the raw vaccine data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<div id="fig-First-5-rows-of-raw-vaccine-data." class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-First-5-rows-of-raw-vaccine-data.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 1%">
+<col style="width: 0%">
+<col style="width: 7%">
+<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+<col style="width: 0%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Entity</th>
+<th style="text-align: right;">Year</th>
+<th style="text-align: right;">BCG.immunization.coverage.among.1.year.olds..WHO.2017.</th>
+<th style="text-align: right;">Hepatitis.B..HepB3..immunization.coverage.among.1.year.olds..WHO.2017.</th>
+<th style="text-align: right;">DTP3.immunization.coverage.among.1.year.olds..WHO.2017.</th>
+<th style="text-align: right;">Polio..Pol3..immunization.coverage.among.1.year.olds..WHO.2017.</th>
+<th style="text-align: right;">Measles..MCV..immunization.coverage.among.1.year.olds..WHO.2017.</th>
+<th style="text-align: right;">Number.of.confirmed.tetanus.cases..WHO.2017.</th>
+<th style="text-align: right;">Number.confirmed.polio.cases..WHO.2017.</th>
+<th style="text-align: right;">Number.of.confirmed.pertussis.cases..WHO.2017.</th>
+<th style="text-align: right;">Number.of.confirmed.measles.cases..WHO.2017.</th>
+<th style="text-align: right;">Number.of.confirmed.diphtheria.cases..WHO.2017.</th>
+<th style="text-align: right;">Estimated.deaths.due.to.tuberculosis.per.100.000.population..excluding.HIV..WHO.2017.</th>
+<th style="text-align: right;">Estimated.number.of.deaths.due.to.tuberculosis..excluding.HIV..WHO.2017.</th>
+<th style="text-align: left;">X</th>
+<th style="text-align: left;">X.1</th>
+<th style="text-align: left;">X.2</th>
+<th style="text-align: left;">X.3</th>
+<th style="text-align: left;">X.4</th>
+<th style="text-align: left;">X.5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: right;">1974</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: right;">1975</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">466</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: right;">1976</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">199</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: right;">1977</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">968</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">11285</td>
+<td style="text-align: right;">28174</td>
+<td style="text-align: right;">480</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: right;">1978</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">1374</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">21200</td>
+<td style="text-align: right;">43964</td>
+<td style="text-align: right;">2154</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-First-5-rows-of-raw-vaccine-data.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: First-5-rows-of-raw-vaccine-data.
+</figcaption>
+</figure>
 </div>
 </div>
-<p>You can add options to executable code like this</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
-</div>
-</div>
-<p>The <code>echo: false</code> option disables the printing of code (only output is displayed).</p>
+<p>As shown in Figure 1,</p>
 </section>
 
 </main>
