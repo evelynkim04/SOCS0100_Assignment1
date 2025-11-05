@@ -142,3 +142,42 @@ ggplot(continent_means, aes(x = continent, y = mean_value, color = continent)) +
     plot.title = element_text(size = 14, face = "bold"),
     legend.position = "none"
   )
+
+# Automating the dot plot and bar chart. (Like that I don't have to manually generate different plots for each 4 measures.)
+library(tidyverse)
+library(glue)
+
+# get all unique measures
+measure_list <- unique(continent_means$measure)
+
+# creating a list of bar plots – one for each measure
+bar_plots <- map(measure_list, function(m) {
+  
+  ggplot(
+    data = filter(continent_means, measure == m),
+    aes(x = continent, 
+        y = mean_value, 
+        fill = continent)
+  ) +
+    geom_col() +
+    scale_y_log10() +
+    theme_minimal() +
+    labs(
+      title = glue("Average value of {m} by continent"),
+      x = "Continent",
+      y = glue("{m} (log scale)")
+    )
+})
+
+# Displaying the first plot
+bar_plots[[1]]
+
+# Displaying the second plot
+bar_plots[[2]]
+
+# Displaying the third plot
+bar_plots[[3]]
+
+# Displaying the fourth plot
+bar_plots[[4]]
+
