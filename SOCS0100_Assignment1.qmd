@@ -46,4 +46,56 @@ data <- read.csv("vaccine_2017.csv", header = TRUE)
 knitr::kable(head(data, 5))
 ```
 
-As shown in Figure 1, the column labels are extremely long and complicated.
+As shown in Figure 1, the column labels are extremely long and complicated. The column names will thus be renamed into a cleaner format.
+
+```{r}
+#| label: fig-First-5-rows-of-renamed-vaccine-data.
+#| fig-cap: First-5-rows-of-renamed-vaccine-data.
+#| message: false
+#| echo: false
+
+# Renaming columns
+library(dplyr)
+
+data <- data %>%
+  rename("BCG_immunity" = "BCG.immunization.coverage.among.1.year.olds..WHO.2017.",
+         "HepB3_immunity" = "Hepatitis.B..HepB3..immunization.coverage.among.1.year.olds..WHO.2017.",
+         "DTP3_immunity" = "DTP3.immunization.coverage.among.1.year.olds..WHO.2017.",
+         "Polio_immunity" = "Polio..Pol3..immunization.coverage.among.1.year.olds..WHO.2017.",
+         "Measles_immunity" = "Measles..MCV..immunization.coverage.among.1.year.olds..WHO.2017.",
+         "Tetanus_cases" = "Number.of.confirmed.tetanus.cases..WHO.2017.",
+         "Polio_cases" = "Number.confirmed.polio.cases..WHO.2017.",
+         "Pertussis_cases" = "Number.of.confirmed.pertussis.cases..WHO.2017.",
+         "Measles_cases" = "Number.of.confirmed.measles.cases..WHO.2017.",
+         "Diphtheria_cases" = "Number.of.confirmed.diphtheria.cases..WHO.2017.",
+         "Deaths_tuberculosisper100,000" = "Estimated.deaths.due.to.tuberculosis.per.100.000.population..excluding.HIV..WHO.2017.",
+         "Deaths_tuberculosis" = "Estimated.number.of.deaths.due.to.tuberculosis..excluding.HIV..WHO.2017.",
+         "Country" = "Entity"
+  )
+
+knitr::kable(head(data, 5))
+```
+
+The variable names are much cleaner now. However there are empty unnecessary columns at the far right. The second data wrangling operation will thus be selecting variables and deleting these columns. This table will be called our clean dataset.
+
+```{r}
+#| label: fig-First-5-rows-of-clean-vaccine-data.
+#| fig-cap: First-5-rows-of-clean-vaccine-data.
+#| message: false
+#| echo: false
+# Selecting variables
+cols_to_remove <- c("X", "X.1", "X.2", "X.3", "X.4", "X.5")
+data_clean <- data %>% 
+  select(-all_of(cols_to_remove))
+
+# Tidying column names
+library(dplyr)
+library(stringr)
+library(tidyr)
+
+colnames(data_clean) <- colnames(data_clean) %>%
+  str_squish() %>%  # Using str_squish() to make sure that there are no unnecessary spaces.
+  str_to_lower() # Using str_to_lower() to make all characters lowercase and thus make my text consistent. 
+
+colnames(data_clean) # Checking to see newly cleaned column names.
+```

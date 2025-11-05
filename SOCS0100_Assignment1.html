@@ -248,7 +248,190 @@ Figure&nbsp;1: First-5-rows-of-raw-vaccine-data.
 </figure>
 </div>
 </div>
-<p>As shown in Figure 1,</p>
+<p>As shown in Figure 1, the column labels are extremely long and complicated. The column names will thus be renamed into a cleaner format.</p>
+<div class="cell">
+<div id="fig-First-5-rows-of-renamed-vaccine-data." class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-First-5-rows-of-renamed-vaccine-data.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 2%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 12%">
+<col style="width: 8%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+<col style="width: 1%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Country</th>
+<th style="text-align: right;">Year</th>
+<th style="text-align: right;">BCG_immunity</th>
+<th style="text-align: right;">HepB3_immunity</th>
+<th style="text-align: right;">DTP3_immunity</th>
+<th style="text-align: right;">Polio_immunity</th>
+<th style="text-align: right;">Measles_immunity</th>
+<th style="text-align: right;">Tetanus_cases</th>
+<th style="text-align: right;">Polio_cases</th>
+<th style="text-align: right;">Pertussis_cases</th>
+<th style="text-align: right;">Measles_cases</th>
+<th style="text-align: right;">Diphtheria_cases</th>
+<th style="text-align: right;">Deaths_tuberculosisper100,000</th>
+<th style="text-align: right;">Deaths_tuberculosis</th>
+<th style="text-align: left;">X</th>
+<th style="text-align: left;">X.1</th>
+<th style="text-align: left;">X.2</th>
+<th style="text-align: left;">X.3</th>
+<th style="text-align: left;">X.4</th>
+<th style="text-align: left;">X.5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: right;">1974</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: right;">1975</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">466</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: right;">1976</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">199</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: right;">1977</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">968</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">11285</td>
+<td style="text-align: right;">28174</td>
+<td style="text-align: right;">480</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Afghanistan</td>
+<td style="text-align: right;">1978</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">1374</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">21200</td>
+<td style="text-align: right;">43964</td>
+<td style="text-align: right;">2154</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-First-5-rows-of-renamed-vaccine-data.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: First-5-rows-of-renamed-vaccine-data.
+</figcaption>
+</figure>
+</div>
+</div>
+<p>The variable names are much cleaner now. However there are empty unnecessary columns at the far right. The second data wrangling operation will thus be selecting variables and deleting these columns. This table will be called our clean dataset.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "country"                       "year"                         
+ [3] "bcg_immunity"                  "hepb3_immunity"               
+ [5] "dtp3_immunity"                 "polio_immunity"               
+ [7] "measles_immunity"              "tetanus_cases"                
+ [9] "polio_cases"                   "pertussis_cases"              
+[11] "measles_cases"                 "diphtheria_cases"             
+[13] "deaths_tuberculosisper100,000" "deaths_tuberculosis"          </code></pre>
+</div>
+</div>
 </section>
 
 </main>
