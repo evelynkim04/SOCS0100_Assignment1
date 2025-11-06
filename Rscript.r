@@ -69,7 +69,7 @@ install.packages("tidyverse")
 # Creating a new table with the average value 
 library(dplyr)
 
-averages <- diff_measure_overtime %>%
+averages <- data_long %>%
   group_by(country, measure) %>%      # group by country AND variable type
   summarise(mean_value = mean(value, na.rm = TRUE)) %>% 
   ungroup()
@@ -81,32 +81,33 @@ library(countrycode)
 continent <- averages %>%
   filter(!country %in% c("World", "Africa", "Americas", "Eastern Mediterranean", 
                          "Europe", "Micronesia (country)", "South-East Asia", "Western Pacific")) %>%
-  mutate(continent = countrycode(country, "country.name", "continent"))
+  mutate(continent = countrycode(country, "country.name", "continent",
+custom_match = c("Timor" = "Asia"))) # The countrycode() function could not match "Timor" to "Asia", so I had to manually code this, as a potential risk might have been that the code would return "Timor" as an NA. 
 
 continent <- averages %>%
   filter(!country %in% c("World", "Africa", "Americas", "Eastern Mediterranean", 
                          "Europe", "Micronesia (country)", "South-East Asia", "Western Pacific")) %>%
-  mutate(continent = countrycode(country, "country.name", "continent",
-                                 custom_match = c("Timor" = "Asia")))
+  mutate(continent = countrycode(country, "country.name", "continent", # The countrycode() function matches the country to the continent. 
+                                 custom_match = c("Timor" = "Asia"))) 
 
 continent_means <- continent %>%
   group_by(continent, measure) %>%
   summarise(mean_value = mean(mean_value, na.rm = TRUE))
 
 # Creating heatmap
-ggplot(continent_means, aes(x = continent, 
-                            y = measure, 
-                            fill = mean_value)) +
-  geom_tile(color = "white") +
-  scale_fill_viridis_c(option = "plasma") +
+ggplot(continent_means, aes(x = continent, # The x axis is the different continents
+                            y = measure, # The y axis is the mean value of different measures
+                            fill = mean_value)) + # The color of the heatmap depends on the mean value in the y axis. 
+  geom_tile(color = "white") + # This function allows the separation of each tile in the heatmap by a white border. 
+  scale_fill_viridis_c(option = "plasma") + # This function allows a colour gradient to be applied, which changes based on the mean value (y axis value).
   theme_minimal() +
   labs(title = "Heatmap of Average Measure Values by Continent", x = "Continent", y = "Measure", fill = "Mean Value")
 
 # Plotting a bar chart
-ggplot(continent_means, aes(x = continent, 
-                            y = mean_value, 
-                            fill = measure)) +
-  geom_col(position = "dodge") +
+ggplot(continent_means, aes(x = continent, # The x axis is the different continents
+                            y = mean_value, # The y axis is the mean value of different measures. 
+                            fill = measure)) + # Each measure will have a separate color. 
+  geom_col(position = "dodge") + # This function allows the bars to be stacked side by side, and not one on top of the other. 
   theme_minimal() +
   labs(title = "Average Values by Continent", x = "Continent", y = "Mean Value")
 

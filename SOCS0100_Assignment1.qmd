@@ -88,6 +88,9 @@ cols_to_remove <- c("X", "X.1", "X.2", "X.3", "X.4", "X.5")
 data_clean <- data %>% 
   select(-all_of(cols_to_remove))
 
+```
+
+```{r}
 # Tidying column names
 library(dplyr)
 library(stringr)
@@ -98,4 +101,105 @@ colnames(data_clean) <- colnames(data_clean) %>%
   str_to_lower() # Using str_to_lower() to make all characters lowercase and thus make my text consistent. 
 
 colnames(data_clean) # Checking to see newly cleaned column names.
+
+knitr::kable(head(data_clean, 5))
+```
+
+Now that the columns are renamed and all unnecessary columns have been gotten rid of, we may carry out our 3rd and final data wrangling task: Reshaping our data frame (pivoting longer, creating new variables "disease" and "measure", and removing all NA.)
+
+I have decided that it was appropriate to remove all NAs, as no clear pattern was visible in them. If the NAs were scattered across the years, then there may have been specific reasons to them. However, since the missing values were large chunks of early on years, it was extremely likely that it was due to poor technology and awareness.
+
+```{r}
+#| label: fig-First-5-rows-of-long-vaccine-data.
+#| fig-cap: First-5-rows-of-long-vaccine-data.
+#| message: false
+data_long <- data_clean %>%
+  pivot_longer(
+    cols = -c(country, year),          
+    names_to = c("disease", "measure"),  
+    names_sep = "_",    # Separates disease from the measure (immunisation coverage, cases, deaths from tuberculosis, and deaths from tuberculosis per 100,000)         
+    values_to = "value",
+    values_drop_na = TRUE
+  )
+
+knitr::kable(head(data_long, 5))
+```
+
+## Part II-A Data Visualisation and Functional Programming
+
+In this section, 3 insightful data visualisations will be carried out using libraries like ggplot2, derived from my refined "data_long" dataset.
+
+Before commencing with anything, the tidyverse package has to be installed.
+
+The new dataset that had been pivoted long still contained too many variables to visualise it. Critical engagement of Copilot became useful here, as it suggested to create average values of each measure, as well as group the countries by continent, as the dataframe contained over 100 different countries. The previous dataset was thus refined into a new one shown below:
+
+```{r}
+#| label: fig-First-5-rows-of-final-data.
+#| fig-cap: First-5-rows-of-final-data.
+#| message: false
+# Creating a new table with the average value 
+library(dplyr)
+
+averages <- data_long %>%
+  group_by(country, measure) %>%      # group by country AND variable type
+  summarise(mean_value = mean(value, na.rm = TRUE)) %>% 
+  ungroup()
+
+# Grouping countries by continent
+library(dplyr)
+library(countrycode)
+
+continent <- averages %>%
+  filter(!country %in% c("World", "Africa", "Americas", "Eastern Mediterranean", 
+                         "Europe", "Micronesia (country)", "South-East Asia", "Western Pacific")) %>%
+  mutate(continent = countrycode(country, "country.name", "continent",
+custom_match = c("Timor" = "Asia"))) # The countrycode() function could not match "Timor" to "Asia", so I had to manually code this, as a potential risk might have been that the code would return "Timor" as an NA. 
+
+continent <- averages %>%
+  filter(!country %in% c("World", "Africa", "Americas", "Eastern Mediterranean", 
+                         "Europe", "Micronesia (country)", "South-East Asia", "Western Pacific")) %>%
+  mutate(continent = countrycode(country, "country.name", "continent", # The countrycode() function matches the country to the continent. 
+                                 custom_match = c("Timor" = "Asia"))) 
+
+continent_means <- continent %>%
+  group_by(continent, measure) %>%
+  summarise(mean_value = mean(mean_value, na.rm = TRUE))
+
+knitr::kable(head(continent_means, 5))
+```
+
+It is now much easier to use this dataset for our first data visualisation, which is a heatmap. Once again, critical engagement of AI made me derive to the conclusion that the first data visualisation method should be easy to understand and provide a general overview fo the trend in the data. A heatmap is a simple way to analyse where values are high or low using colour.
+
+```{r}
+#| label: fig-Heatmap.
+#| fig-cap: Heatmap.
+#| message: false
+#| echo: false
+# Creating heatmap
+ggplot(continent_means, aes(x = continent, # The x axis is the different continents
+                            y = measure, # The y axis is the mean value of different measures
+                            fill = mean_value)) + # The color of the heatmap depends on the mean value in the y axis. 
+  geom_tile(color = "white") + # This function allows the separation of each tile in the heatmap by a white border. 
+  scale_fill_viridis_c(option = "plasma") + # This function allows a colour gradient to be applied, which changes based on the mean value (y axis value).
+  theme_minimal() +
+  labs(title = "Heatmap of Average Measure Values by Continent", x = "Continent", y = "Measure", fill = "Mean Value")
+
+```
+
+The heatmap as shown in Figure 5 is a simple way that informs us on relative trends at one glance. For instance, it is strikingly clear that tuberculosis deaths in Asia are extremely high compared to other continent. However, a weakness of this data visualisation is that it doesn't give us precise values.
+
+Now that we know the general trends of the dataframe, it may be useful to plot a bar chart, which would give us more precise values for each continent.
+
+```{r}
+#| label: fig-Bar-chart.
+#| fig-cap: Bar-chart.
+#| message: false
+#| echo: false
+# Plotting a bar chart
+ggplot(continent_means, aes(x = continent, # The x axis is the different continents
+                            y = mean_value, # The y axis is the mean value of different measures. 
+                            fill = measure)) + # Each measure will have a separate color. 
+  geom_col(position = "dodge") + # This function allows the bars to be stacked side by side, and not one on top of the other. 
+  theme_minimal() +
+  labs(title = "Average Values by Continent", x = "Continent", y = "Mean Value")
 ```
