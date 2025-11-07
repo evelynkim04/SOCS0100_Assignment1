@@ -182,5 +182,4 @@ bar_plots[[3]]
 # Displaying the fourth plot
 bar_plots[[4]]
 
-# Critical engagement of copilot : Although it suggested to automate the task and make separate plots for each measure, 
-# I feel like when I had manually done it with all measures showing at once was more insightful and comparable. 
+
