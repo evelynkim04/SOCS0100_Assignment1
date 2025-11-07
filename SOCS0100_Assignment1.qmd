@@ -111,7 +111,7 @@ I have decided that it was appropriate to remove all NAs, as no clear pattern wa
 
 ```{r}
 #| label: fig-First-5-rows-of-long-vaccine-data.
-#| fig-cap: First-5-rows-of-long-vaccine-data.
+#| fig-cap: First 5 rows of long vaccine data.
 #| message: false
 data_long <- data_clean %>%
   pivot_longer(
@@ -135,7 +135,7 @@ The new dataset that had been pivoted long still contained too many variables to
 
 ```{r}
 #| label: fig-First-5-rows-of-final-data.
-#| fig-cap: First-5-rows-of-final-data.
+#| fig-cap: First 5 rows of final data.
 #| message: false
 # Creating a new table with the average value 
 library(dplyr)
@@ -191,8 +191,8 @@ The heatmap as shown in Figure 5 is a simple way that informs us on relative tre
 Now that we know the general trends of the dataframe, it may be useful to plot a bar chart, which would give us more precise values for each continent.
 
 ```{r}
-#| label: fig-Bar-chart.
-#| fig-cap: Bar-chart.
+#| label: fig-Barchart.
+#| fig-cap: Barchart.
 #| message: false
 #| echo: false
 # Plotting a bar chart
@@ -201,5 +201,120 @@ ggplot(continent_means, aes(x = continent, # The x axis is the different contine
                             fill = measure)) + # Each measure will have a separate color. 
   geom_col(position = "dodge") + # This function allows the bars to be stacked side by side, and not one on top of the other. 
   theme_minimal() +
-  labs(title = "Average Values by Continent", x = "Continent", y = "Mean Value")
+  labs(title = "Average Values of Different Measures by Continent", x = "Continent", y = "Mean Value")
+```
+
+Unfortunately, the values for immunity and deaths from Tuberculosis per 100,000 aren't visible because they are significantly smaller than the other two measures. Using critical engagement of Copilot, which suggested to apply a logscale to compress large values, and make smaller ones more spread out.
+
+```{r}
+#| label: fig-Barchart-with-logscale.
+#| fig-cap: Barchart with logscale.
+#| message: false
+#| echo: false
+# Applying a logscale because immunity and tuberculosisper100,000 aren't visible (values are too small)
+ggplot(continent_means, aes(x = continent, 
+                            y = mean_value, 
+                            fill = measure)) +
+  geom_col(position = "dodge") +
+  scale_y_log10() + # This function allows us to apply a logscale to values. 
+  labs(
+    title = "Average Values of Different Measures by Continent",
+    x = "Continent",
+    y = "Measure value (log scale)"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+#| results: hide
+# Applying a logscale because immunity and tuberculosisper100,000 aren't visible (values are too small)
+ggplot(continent_means, aes(x = continent, 
+                            y = mean_value, 
+                            fill = measure)) +
+  geom_col(position = "dodge") +
+  scale_y_log10() + # This function allows us to apply a logscale to values. 
+  labs(
+    title = "Average Values of Different Measures by Continent",
+    x = "Continent",
+    y = "Measure value (log scale)"
+  ) +
+  theme_minimal()
+```
+
+As illustrated in Figure 7, it is much easier to view and compare the bars with a logscale applied.
+
+Although the bar chart gives us insightful information on the exact values, the visual clutter of 4 different types of measures for each continent may not be the best way to present the data. This is why I decided to plot a dot plot for my final data visualisation, which is a much cleaner. Furthermore, using AI I had come to the conclusion that it would be optimal to create 4 separate graphs (one for each measure) to avoid the visual cluster, which was the problem when I had plotted the bar chart.
+
+```{r}
+#| label: fig-dot-plots.
+#| fig-cap: 4 separate dot plots for each measure.
+#| message: false
+#| echo: false
+# Creating a dot plot
+library(ggplot2)
+library(dplyr)
+
+ggplot(continent_means, aes(x = continent, y = mean_value, color = continent)) +
+  geom_point(size = 4, alpha = 0.8) + # This line of code allows the dots sizes to be relatively large so that it is easy to see, and also slightly transparent just in case they overlap. 
+  scale_y_log10() +   # log scale applied here to the y-axis. Makes either extremely small/large values comparable.
+  facet_wrap(~ measure, scales = "free_y") + # This is the function that creates 4 separate graphs for each measure. "scales = free_y" makes each of the 4 graphs to have its own y-axis. 
+  theme_minimal() +
+  labs(
+    title = "Mean Values of Different Measures Across Continents",
+    x = "Continent",
+    y = "Mean Value (log scale)"
+  ) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(size = 14, face = "bold"),
+    legend.position = "none"
+  )
+```
+
+One last step we can take to make this whole process easier is automating the plotting of the bar chart:
+
+```{r}
+#| label: fig-automated-bar-charts.
+#| fig-cap: Automated bar chart.
+#| message: false
+#| echo: false
+# Automating the dot plot and bar chart. (So that I don't have to manually generate different plots for each 4 measures.)
+library(tidyverse)
+library(glue)
+
+# Retrieving all the different measures
+measure_list <- unique(continent_means$measure)
+
+# Creating a list of bar plots – one for each measure
+bar_plots <- map(measure_list, function(m) { # The map() function runs makes sure to run the code for each measure without me having to manually do it one by one. 
+  
+  ggplot(
+    data = filter(continent_means, measure == m),
+    aes(x = continent, 
+        y = mean_value, 
+        fill = continent)
+  ) +
+    geom_col() +
+    scale_y_log10() +
+    theme_minimal() +
+    labs(
+      title = glue("Average value of {m} by continent"),
+      x = "Continent",
+      y = glue("{m} (log scale)")
+    )
+})
+```
+
+```{r}
+# Displaying the first plot
+bar_plots[[1]]
+
+# Displaying the second plot
+bar_plots[[2]]
+
+# Displaying the third plot
+bar_plots[[3]]
+
+# Displaying the fourth plot
+bar_plots[[4]]
 ```

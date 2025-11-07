@@ -664,7 +664,7 @@ Figure&nbsp;2: First-5-rows-of-renamed-vaccine-data.
 </table>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-First-5-rows-of-long-vaccine-data.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: First-5-rows-of-long-vaccine-data.
+Figure&nbsp;3: First 5 rows of long vaccine data.
 </figcaption>
 </figure>
 </div>
@@ -746,7 +746,7 @@ Figure&nbsp;3: First-5-rows-of-long-vaccine-data.
 </table>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-First-5-rows-of-final-data.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: First-5-rows-of-final-data.
+Figure&nbsp;4: First 5 rows of final data.
 </figcaption>
 </figure>
 </div>
@@ -770,14 +770,105 @@ Figure&nbsp;5: Heatmap.
 <p>Now that we know the general trends of the dataframe, it may be useful to plot a bar chart, which would give us more precise values for each continent.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-Bar-chart." class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-Barchart." class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-Bar-chart.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="SOCS0100_Assignment1_files/figure-html/fig-Bar-chart.-1.png" class="img-fluid figure-img" width="672">
+<div aria-describedby="fig-Barchart.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="SOCS0100_Assignment1_files/figure-html/fig-Barchart.-1.png" class="img-fluid figure-img" width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Bar-chart.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Bar-chart.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Barchart.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Barchart.
 </figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Unfortunately, the values for immunity and deaths from Tuberculosis per 100,000 aren’t visible because they are significantly smaller than the other two measures. Using critical engagement of Copilot, which suggested to apply a logscale to compress large values, and make smaller ones more spread out.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-Barchart-with-logscale." class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-Barchart-with-logscale.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="SOCS0100_Assignment1_files/figure-html/fig-Barchart-with-logscale.-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Barchart-with-logscale.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Barchart with logscale.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Applying a logscale because immunity and tuberculosisper100,000 aren't visible (values are too small)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(continent_means, <span class="fu">aes</span>(<span class="at">x =</span> continent, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y =</span> mean_value, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fill =</span> measure)) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span> <span class="co"># This function allows us to apply a logscale to values. </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Average Values of Different Measures by Continent"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Continent"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Measure value (log scale)"</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="SOCS0100_Assignment1_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As illustrated in Figure 7, it is much easier to view and compare the bars with a logscale applied.</p>
+<p>Although the bar chart gives us insightful information on the exact values, the visual clutter of 4 different types of measures for each continent may not be the best way to present the data. This is why I decided to plot a dot plot for my final data visualisation, which is a much cleaner. Furthermore, using AI I had come to the conclusion that it would be optimal to create 4 separate graphs (one for each measure) to avoid the visual cluster, which was the problem when I had plotted the bar chart.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dot-plots." class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dot-plots.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="SOCS0100_Assignment1_files/figure-html/fig-dot-plots.-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dot-plots.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: 4 separate dot plots for each measure.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>One last step we can take to make this whole process easier is automating the plotting of the bar chart:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying the first plot</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>bar_plots[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="SOCS0100_Assignment1_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying the second plot</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>bar_plots[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="SOCS0100_Assignment1_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying the third plot</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>bar_plots[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="SOCS0100_Assignment1_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying the fourth plot</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>bar_plots[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="SOCS0100_Assignment1_files/figure-html/unnamed-chunk-3-4.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

@@ -109,7 +109,7 @@ ggplot(continent_means, aes(x = continent, # The x axis is the different contine
                             fill = measure)) + # Each measure will have a separate color. 
   geom_col(position = "dodge") + # This function allows the bars to be stacked side by side, and not one on top of the other. 
   theme_minimal() +
-  labs(title = "Average Values by Continent", x = "Continent", y = "Mean Value")
+  labs(title = "Average Values of Different Measures by Continent", x = "Continent", y = "Mean Value")
 
 # Applying a logscale because immunity and tuberculosisper100,000 aren't visible (values are too small)
 ggplot(continent_means, aes(x = continent, 
@@ -118,7 +118,7 @@ ggplot(continent_means, aes(x = continent,
   geom_col(position = "dodge") +
   scale_y_log10() + 
   labs(
-    title = "Average Values of different measures by Continent",
+    title = "Average Values of Different Measures by Continent",
     x = "Continent",
     y = "Measure value (log scale)"
   ) +
@@ -129,12 +129,12 @@ library(ggplot2)
 library(dplyr)
 
 ggplot(continent_means, aes(x = continent, y = mean_value, color = continent)) +
-  geom_point(size = 4, alpha = 0.8) +
-  scale_y_log10() +   # <-- log scale applied here. Makes either extremely small/large values comparable. 
-  facet_wrap(~ measure, scales = "free_y") +
+  geom_point(size = 4, alpha = 0.8) + # This line of code allows the dots sizes to be relatively large so that it is easy to see, and also slightly transparent just in case they overlap. 
+  scale_y_log10() +   # log scale applied here to the y-axis. Makes either extremely small/large values comparable.
+  facet_wrap(~ measure, scales = "free_y") + # This is the function that creates 4 separate graphs for each measure. "scales = free_y" makes each of the 4 graphs to have its own y-axis. 
   theme_minimal() +
   labs(
-    title = "Mean Values Across Continents",
+    title = "Mean Values of Different Measures Across Continents",
     x = "Continent",
     y = "Mean Value (log scale)"
   ) +
@@ -144,15 +144,15 @@ ggplot(continent_means, aes(x = continent, y = mean_value, color = continent)) +
     legend.position = "none"
   )
 
-# Automating the dot plot and bar chart. (Like that I don't have to manually generate different plots for each 4 measures.)
+# Automating the dot plot and bar chart. (So that I don't have to manually generate different plots for each 4 measures.)
 library(tidyverse)
 library(glue)
 
-# get all unique measures
+# Retrieving all the different measures
 measure_list <- unique(continent_means$measure)
 
-# creating a list of bar plots – one for each measure
-bar_plots <- map(measure_list, function(m) {
+# Creating a list of bar plots – one for each measure
+bar_plots <- map(measure_list, function(m) { # The map() function runs makes sure to run the code for each measure without me having to manually do it one by one. 
   
   ggplot(
     data = filter(continent_means, measure == m),
