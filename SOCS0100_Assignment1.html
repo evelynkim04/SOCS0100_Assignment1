@@ -98,20 +98,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="part-i-a-data-exploration-and-contextualisation" class="level2">
-<h2 class="anchored" data-anchor-id="part-i-a-data-exploration-and-contextualisation">Part I-A Data Exploration and Contextualisation</h2>
-<p>The chosen dataset for this assignment was released by the WHO, which displays the immunisation coverage among 1 year olds between 1974 and 2015 for diseases such as Tuberculosis (the data doesn’t explicitly say tuberculosis immunisation coverage, because the disease is protected by the BCG vaccine), Hepatitis B, Diphtheria, Tetanus, Polio, and Measles in different regions of the world. It also includes data of the number of confirmed cases for Tetanus, Polio, Pertussis, Measles, and Diphtheria. Finally, the dataset showcases the estimated deaths due to tuberculosis excluding HIV.</p>
-<p>We will begin by defining one of the key variables in the dataset - immunisation coverage. It is the outcome of successful vaccination which accounts for full immunity to the disease. This dataset was chosen for this assessment as it is highly relevant in today’s social science studies. It wishes to determine the relationship between immunisation coverage and the resulting number of confirmed cases. This could be a potential indicator of the minimum immunisation coverage that is needed to reduce cases.</p>
+<section id="part-i-a" class="level2">
+<h2 class="anchored" data-anchor-id="part-i-a">Part I-A</h2>
+<p>The chosen dataset for this assignment was released by the WHO, and it displays the immunisation coverage among one year olds between 1974 and 2015 for diseases such as Tuberculosis (the data doesn’t explicitly say tuberculosis immunisation coverage, because the disease is protected by the BCG vaccine), Hepatitis B, Diphtheria, Tetanus, Polio, and Measles in different regions of the world. It also includes data on the number of confirmed cases for Tetanus, Polio, Pertussis, Measles, and Diphtheria. Finally, the dataset showcases the estimated deaths due to tuberculosis excluding HIV.</p>
+<p>We will begin by defining one of the key variables in the dataset: Immunisation coverage. It is the outcome of successful vaccination which accounts for full immunity to the disease. This dataset was chosen for this assessment as it is highly relevant in today’s social science studies. It wishes to determine the relationship between cases and immunisation coverage. This could be a potential indicator of the minimum immunisation coverage that is needed to reduce cases.</p>
 <p>After further inspection of the dataset, we notice that all diseases are part of the “Routine Immunisation Schedule”, which is a recommended vaccination schedule <a href="#_msocom_1">[1]</a>&nbsp;by a country’s health department to be completed before the age of 1.</p>
-<p>The dataset is thus useful when judging the overall quality of the country’s health care system, and whether it is consistent. Because some of these diseases require more than just one dose. Let us look at the DTP3 vaccine, the third dose for prevention of Diphtheria and Tetanus as an example. A low immunisation coverage and of Diphtheria and Tetanus may thus be a potential suggestion of a low consistency in the country’s healthcare system because people <em>need</em> to have 3 doses to have full immunity. There is thus high relevance of this dataset in social science, as it allows exploration of how social phenomenon influences the general state of a country’s healthcare <a href="#_msocom_1">[2]</a> system.</p>
-<p>Finally, in terms of missing values (NA), the dataset contains quite a significant missing values. There is no clear pattern in these but in general, many missing values are from countries with less developed healthcare systems, and are during the years before the 2000s. These descriptive findings are not unexpected as it is likely that these countries didn’t have the means to record data given their social and economic situations.</p>
-<p><a href="#_msoanchor_1">[2]</a><a href="https://www.kcl.ac.uk/kghi/research/health-and-social-science" class="uri">https://www.kcl.ac.uk/kghi/research/health-and-social-science</a></p>
-<p><a href="#_msoanchor_1">[1]</a><a href="https://www.sciencedirect.com/topics/immunology-and-microbiology/vaccination-schedule#:~:text=A%20vaccination%20schedule%20is%20defined,is%20effectively%20built%20and%20sustained" class="uri">https://www.sciencedirect.com/topics/immunology-and-microbiology/vaccination-schedule#:~:text=A%20vaccination%20schedule%20is%20defined,is%20effectively%20built%20and%20sustained</a>.</p>
+<p>The dataset is thus useful when judging the overall quality of the country’s health care system, and whether it is consistent. Because some of these diseases require more than just one dose.</p>
+<p>Let us look at the DTP3 vaccine (the third dose for prevention of Diphtheria and Tetanus) as an example. A low immunisation coverage and of Diphtheria and Tetanus may be a potential suggestion of a low consistency in the country’s healthcare system because people <em>need</em> to have 3 doses to have full immunity. There is thus high relevance of this dataset in social science, as it allows exploration of how socio-economic phenomenon influences the general state of a country’s healthcare <a href="#_msocom_1">[2]</a> system.</p>
+<p>Finally, the dataset contains quite a significant missing values. In general, there are no clear patterns in the NAs, but many are from countries with less developed healthcare systems, and are during the years before the 2000s. These descriptive findings are not unexpected, as it is likely that these less developed countries didn’t have the means to record data given their social and economic situations.</p>
 </section>
-<section id="part-i-b-data-processing-and-functional-programming" class="level2">
-<h2 class="anchored" data-anchor-id="part-i-b-data-processing-and-functional-programming">Part I-B Data Processing and Functional Programming</h2>
-<p>This section aims to carry out 3 data wrangling using libraries such as Tidyverse packages, like dyplr. The first operation is renaming the dataset columns after having carried out all the necessary steps before hand (Removing everything in my environment and setting up working directory, downloading required packages such as pacman, and importing the “vaccine_2017.csv” data.)</p>
-<p>The table below shows the first 5 rows of the raw vaccine data.</p>
+<section id="part-i-b" class="level2">
+<h2 class="anchored" data-anchor-id="part-i-b">Part I-B</h2>
+<p>This section aims to carry out 3 data wrangling tasks using libraries such as Tidyverse packages, like dyplr. The first operation is renaming the dataset columns after having carried out all the necessary steps before hand (Removing everything in my environment and setting up working directory, downloading required packages such as pacman, and importing the “vaccine_2017.csv” data.)</p>
 <div class="cell">
 <div id="fig-First-5-rows-of-raw-vaccine-data." class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -455,7 +453,7 @@ Figure&nbsp;2: First-5-rows-of-renamed-vaccine-data.
 </figure>
 </div>
 </div>
-<p>The variable names are much cleaner now. However there are empty unnecessary columns at the far right. The second data wrangling operation will thus be selecting variables and deleting these columns. This table will be called our clean dataset.</p>
+<p>The variable names are much cleaner now. However there are unnecessary columns at the far right (X, X.1, X.2…). The second data wrangling operation will thus be selecting variables and deleting these columns. The newly formed table will be called “data_clean”.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tidying column names</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
@@ -599,18 +597,19 @@ Figure&nbsp;2: First-5-rows-of-renamed-vaccine-data.
 </div>
 </div>
 <p>Now that the columns are renamed and all unnecessary columns have been gotten rid of, we may carry out our 3rd and final data wrangling task: Reshaping our data frame (pivoting longer, creating new variables “disease” and “measure”, and removing all NA.)</p>
-<p>I have decided that it was appropriate to remove all NAs, as no clear pattern was visible in them. If the NAs were scattered across the years, then there may have been specific reasons to them. However, since the missing values were large chunks of early on years, it was extremely likely that it was due to poor technology and awareness.</p>
+<p>I have decided that it was appropriate to remove all NAs, as no clear pattern was visible in them. If the NAs were scattered across the years, then there may have been specific reasons to them. However, since the missing values were large chunks during early years, it was extremely likely that it was due to poor technology and awareness.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data_clean <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(country, year),          </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"disease"</span>, <span class="st">"measure"</span>),  </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">"_"</span>,    <span class="co"># Separates disease from the measure (immunisation coverage, cases, deaths from tuberculosis, and deaths from tuberculosis per 100,000)         </span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"value"</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(data_long, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshaping data frame: Pivoting the "data_clean" longer, creating new variables ("disease" and "measure"), and removing NA. </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data_clean <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(country, year),          </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"disease"</span>, <span class="st">"measure"</span>),  </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">"_"</span>,    <span class="co"># Separates disease from the measure (immunisation coverage, cases, deaths from tuberculosis, and deaths from tuberculosis per 100,000)         </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"value"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_drop_na =</span> <span class="cn">TRUE</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(data_long, <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-First-5-rows-of-long-vaccine-data." class="cell-output-display quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-First-5-rows-of-long-vaccine-data.-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -670,11 +669,11 @@ Figure&nbsp;3: First 5 rows of long vaccine data.
 </div>
 </div>
 </section>
-<section id="part-ii-a-data-visualisation-and-functional-programming" class="level2">
-<h2 class="anchored" data-anchor-id="part-ii-a-data-visualisation-and-functional-programming">Part II-A Data Visualisation and Functional Programming</h2>
-<p>In this section, 3 insightful data visualisations will be carried out using libraries like ggplot2, derived from my refined “data_long” dataset.</p>
-<p>Before commencing with anything, the tidyverse package has to be installed.</p>
-<p>The new dataset that had been pivoted long still contained too many variables to visualise it. Critical engagement of Copilot became useful here, as it suggested to create average values of each measure, as well as group the countries by continent, as the dataframe contained over 100 different countries. The previous dataset was thus refined into a new one shown below:</p>
+<section id="part-ii-a" class="level2">
+<h2 class="anchored" data-anchor-id="part-ii-a">Part II-A</h2>
+<p>In this section, 3 insightful data visualisations was carried out using libraries like ggplot2, derived from my refined “data_long” dataset.</p>
+<p>Before commencing, the tidyverse package needs to be installed.</p>
+<p>The new dataset that had been pivoted long still contained too many variables to visualise it. Critical engagement of Copilot became useful here, as it suggested to create average values of each measure and then group the countries by continent, as the dataframe contained over 100 different countries. The previous dataset was thus refined into a new one shown below:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a new table with the average value </span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
@@ -751,7 +750,7 @@ Figure&nbsp;4: First 5 rows of final data.
 </figure>
 </div>
 </div>
-<p>It is now much easier to use this dataset for our first data visualisation, which is a heatmap. Once again, critical engagement of AI made me derive to the conclusion that the first data visualisation method should be easy to understand and provide a general overview fo the trend in the data. A heatmap is a simple way to analyse where values are high or low using colour.</p>
+<p>It is now much easier to use this dataset for our first data visualisation, which is a heatmap. Critical engagement of AI made me derive to the conclusion that the very first data visualisation method should be easy to understand and provide a general overview of the trend in the data. A heatmap is a simple way to analyse where values are high or low, with the use of colour.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-Heatmap." class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -782,7 +781,7 @@ Figure&nbsp;6: Barchart.
 </div>
 </div>
 </div>
-<p>Unfortunately, the values for immunity and deaths from Tuberculosis per 100,000 aren’t visible because they are significantly smaller than the other two measures. Using critical engagement of Copilot, which suggested to apply a logscale to compress large values, and make smaller ones more spread out.</p>
+<p>Unfortunately, the values for immunity and deaths from Tuberculosis per 100,000 aren’t visible because they are significantly smaller than the other two measures. Copilot was used as a supporting tool, which suggested to apply a logscale to compress the large values, and make smaller ones more spread out.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-Barchart-with-logscale." class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -818,8 +817,8 @@ Figure&nbsp;7: Barchart with logscale.
 </div>
 </div>
 </div>
-<p>As illustrated in Figure 7, it is much easier to view and compare the bars with a logscale applied. We may observe for example, that immunity levels are very similar in all continent, or that cases are highest in Asia.</p>
-<p>Although the bar chart gives us insightful information on the exact values, the visual clutter of 4 different types of measures for each continent may not be the best way to present the data. This is why I decided to plot a dot plot for my final data visualisation, which is a much cleaner. Furthermore, using AI I had come to the conclusion that it would be optimal to create 4 separate graphs (one for each measure) to avoid the visual cluster, which was the problem when I had plotted the bar chart.</p>
+<p>As illustrated in Figure 7, it is much easier to view and compare the bars with a logscale applied. We may observe, for example, that immunity levels are very similar in all continent, or that cases are highest in Asia.</p>
+<p>Although the bar chart gives us insightful information on the exact values, the visual clutter of 4 different types of measures for each continent may not be the best way to present the data. This is why I decided to plot a dot plot for my final data visualisation, which is a much cleaner. The dot plot was separated into 4 different graphs (one for each measure) to avoid the visual clutter. The latter was suggested by AI tool, who was asked to suggest a solution for the visual clutter that had been a problem for the bar chart.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-dot-plots." class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -873,8 +872,37 @@ Figure&nbsp;8: 4 separate dot plots for each measure.
 </div>
 </div>
 </div>
-<p>Automation allows me to plot the graphs without having to write the codes each time.</p>
-<p>Using these graphs, we may come down to several conclusions. Although cases more or less similar in all continents (shown in , the average value of deaths</p>
+<p>Automation allowed me to plot the graphs without having to write the codes each time.</p>
+<p>Using these graphs, we may come down to several conclusions. Although cases are more or less similar in all continents (shown in plot 1), the average value of deaths from tuberculosis (plot 3) are significantly higher in Africa and Asia. This suggests that there is a socioeconomic factor that is involved. Many countries in Africa and Asia have less developed healthcare systems than for instance, Europe, which may be the reason for the higher number of deaths.</p>
+<p>This trend is still observable in plot 4 which showcases the deaths of tuberculosis per 100,000 (hence the rate), although values are also high for Oceania as well for some further researchable reasons.</p>
+<p>Finally, we may also conclude an overall negative relationship between cases and immunity, as shown in Figure 8. Relatively low immunisation coverage is always followed by a high number of cases.</p>
+</section>
+<section id="part-ii-c" class="level2">
+<h2 class="anchored" data-anchor-id="part-ii-c">Part II-C</h2>
+<p>Critically engaging Copilot, and using it as a collaborative tool allowed for insightful perspectives, suggestions, and problem solving approaches. Utilising Copilot for functions that carried out specific tasks made a significant contribution to this assignment.</p>
+<p>For instance, functions such as “str_to_lower()” used during data cleaning, or “facet_wrap()” for plotting the dot plot were all functions I wasn’t familiar with that Copilot suggested to use in my line of code.</p>
+<p>Furthermore, AI was used for explanation of certain functions, and correction of codes with errors - For example, use of AI allowed for identification of certain packages not having been downloaded, or of certain lines of code that were omitted.</p>
+<p>A clear example of this is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|eval: false</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Grouping countries by continent</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(countrycode)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>continent <span class="ot">&lt;-</span> averages <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"World"</span>, <span class="st">"Africa"</span>, <span class="st">"Americas"</span>, <span class="st">"Eastern Mediterranean"</span>, </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Europe"</span>, <span class="st">"Micronesia (country)"</span>, <span class="st">"South-East Asia"</span>, <span class="st">"Western Pacific"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">continent =</span> <span class="fu">countrycode</span>(country, <span class="st">"country.name"</span>, <span class="st">"continent"</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="at">custom_match =</span> <span class="fu">c</span>(<span class="st">"Timor"</span> <span class="ot">=</span> <span class="st">"Asia"</span>))) <span class="co"># The countrycode() function could not match "Timor" to "Asia", so I had to manually code this, as a potential risk might have been that the code would return "Timor" as an NA. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The error message in the beginning was that certain column names had been omitted. Using AI as a support, I figured out that the country “Timor” could not be matched to the continent “Asia”. Copilot suggested the use of the function “custom_match”, which is what I decided to use to prevent all “Timor” data from becoming NAs.</p>
+<p>One constraint however, was the suggestion of abundant ideas. For instance, when asking for advice on what type of graphs to plot, Copilot would suggest overly complicated, or irrelevant graphs.</p>
+<p>Neverthelss, overall I believe use of AI helped in shaping the overall outcomes in this assessment, in the presentation of several of the plots, as well as in deciding the type of plots, in order to present data in the best possible way.</p>
+</section>
+<section id="bibliography" class="level2">
+<h2 class="anchored" data-anchor-id="bibliography">Bibliography</h2>
+<p><a href="#_msoanchor_1">[1]</a> Fenner, F. (1987). “Veterinary virology”, Orlando: Harcourt Brace Jovanovich.</p>
+<p><a href="#_msoanchor_1">[2]</a> King’s Global Health Institute. (2025), <a href="https://www.kcl.ac.uk/kghi/research/health-and-social-science" class="uri">https://www.kcl.ac.uk/kghi/research/health-and-social-science</a></p>
 </section>
 
 </main>

@@ -36,7 +36,7 @@ data <- data %>%
          "Country" = "Entity"
   )
  
-# Selecting variables - Deleting unnecessary empty columns at the far right of "data" and calling this new dataset "data_clean"
+# Selecting variables - Deleting unnecessary empty columns at the far right of "data" and calling this new dataset "data_clean".
 cols_to_remove <- c("X", "X.1", "X.2", "X.3", "X.4", "X.5")
 data_clean <- data %>% 
   select(-all_of(cols_to_remove))
